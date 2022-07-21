@@ -8,7 +8,7 @@
     <title>@yield('title') - GES-SPIRO</title>
 
     @include('layouts.scripts')
-
+    @yield('scripts')
 </head>
 
 <body>
@@ -29,6 +29,7 @@
         <!-- /main content -->
     </div>
     <!-- /page content -->
+    @yield('footer_script')
 </body>
 
 </html>

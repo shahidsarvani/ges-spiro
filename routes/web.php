@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\ContentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\MediaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 Route::get('/', function () {
     return redirect()->route('dashboard');
 });
@@ -26,4 +29,8 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('menus', MenuController::class);
+    Route::resource('contents', ContentController::class);
+    Route::resource('media', MediaController::class)->only('destroy');
+    Route::post('/upload_media', [MediaController::class, 'upload_media_dropzone'])->name('upload_media');
+
 });

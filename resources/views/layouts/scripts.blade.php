@@ -16,5 +16,11 @@
 
 <!-- Theme JS files -->
 <script src="{{ asset('assets/js/app.js') }}"></script>
+<script src="{{ asset('assets/tinymce/tinymce.min.js') }}"></script>
+<script src="{{ asset('assets/tinymce/init-tinymce.js') }}"></script>
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 <!-- /theme JS files -->
+
+<script>
+    var csrf_token = "{{ csrf_token() }}"
+</script>

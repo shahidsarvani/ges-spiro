@@ -66,16 +66,18 @@
                         </span>
                     </a>
                 </li>
-                {{-- <li class="nav-item nav-item-submenu">
-                    <a href="#" class="nav-link"><i class="icon-copy"></i> <span>menus</span></a>
+                <li class="nav-item nav-item-submenu @if (Route::is('contents.*')) nav-item-open @endif">
+                    <a href="#" class="nav-link"><i class="icon-copy"></i> <span>Content</span></a>
 
-                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
-                        <li class="nav-item"><a href="index.html" class="nav-link active">Add</a></li>
+                    <ul class="nav nav-group-sub @if (Route::is('contents.*')) d-block @endif" data-submenu-title="Layouts">
+                        <li class="nav-item">
+                            <a href="{{ route('contents.create') }}" class="nav-link @if (Route::is('contents.create')) active @endif">Add Content</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('contents.index') }}" class="nav-link @if (Route::is('contents.index', 'contents.edit')) active @endif">Content List</a>
+                        </li>
                     </ul>
-                </li> --}}
-                {{-- <li class="nav-item"><a href="../../../RTL/default/full/index.html" class="nav-link"><i
-                            class="icon-width"></i> <span>RTL version</span></a></li> --}}
-                <!-- /main -->
+                </li>
 
             </ul>
         </div>
