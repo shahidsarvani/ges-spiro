@@ -34,7 +34,7 @@
                                 <div class="form-group">
                                     <label>Title:</label>
                                     <input type="text" class="form-control" name="title"
-                                        value="{{ $content->title }}" required>
+                                        value="{{ $content->title }}">
                                 </div>
                             </div>
                             <div class="col-md-4">

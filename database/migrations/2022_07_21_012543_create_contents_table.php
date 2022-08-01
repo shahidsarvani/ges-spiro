@@ -15,10 +15,10 @@ class CreateContentsTable extends Migration
     {
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->string('sub_title')->nullable();
-            $table->longText('content');
-            $table->foreignId('menu_id')->nullable();
+            $table->longText('content')->nullable();
+            $table->foreignId('menu_id');
             $table->timestamps();
         });
     }
