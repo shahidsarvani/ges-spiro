@@ -21,6 +21,10 @@ class Menu extends Model
         return $this->belongsTo(Menu::class, 'parent_id');
     }
 
+    public function content() {
+        return $this->hasOne(Content::class);
+    }
+
     public function getPositionLabelAttribute()
     {
         if ($this->position == null) {

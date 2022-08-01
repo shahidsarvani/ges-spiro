@@ -35,7 +35,7 @@
                                     <select name="menu_id" id="menu_id" class="form-control" required>
                                         <option value="">Select Menu</option>
                                         @foreach ($menus as $item)
-                                            <option value="{{ $item['id'] }}">{{ $item['title'] }}
+                                            <option value="{{ $item['id'] }}" @if (in_array($item['id'], $done_menu)) disabled @endif>{{ $item['title'] }}
                                             </option>
                                         @endforeach
                                     </select>

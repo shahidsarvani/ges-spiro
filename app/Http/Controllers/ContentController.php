@@ -6,6 +6,7 @@ use App\Models\Content;
 use App\Models\Media;
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ContentController extends Controller
 {
@@ -47,9 +48,15 @@ class ContentController extends Controller
     public function create()
     {
         //
-        $all_menus = Menu::with('parent')->get();
+        $all_menus = Menu::with('parent', 'content')->get();
         $menus = array();
+        $done_menu = array();
         foreach ($all_menus as $item) {
+            // Log::info($item);
+            // Log::info($item->content);
+            if($item->content) {
+                array_push($done_menu, $item->content->menu_id);
+            }
             $title = array();
             if ($item->parent) {
                 array_unshift($title, $item->parent->title);
@@ -71,7 +78,8 @@ class ContentController extends Controller
             ];
             array_push($menus, $temp);
         }
-        return view('contents.create', compact('menus'));
+        // return $done_menu;
+        return view('contents.create', compact('menus', 'done_menu'));
     }
 
     /**

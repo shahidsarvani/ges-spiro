@@ -18,6 +18,13 @@
                                 <div class="form-group">
                                     <label>Thumbnail:</label>
                                     <input type="file" name="video_thumbnail" id="video_thumbnail" class="form-control-uniform" accept="image/*" value="{{ $media->video_thumbnail }}" data-fouc>
+                                    <div class="mt-3">
+                                        @if ($media->video_thumbnail)
+                                            <img src="{{ URL::asset('public/storage/media/' . $media->video_thumbnail) }}" alt="" width="25%">
+                                        @else
+                                            <p>No thumbnail available</p>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
