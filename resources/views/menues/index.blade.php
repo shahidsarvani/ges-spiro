@@ -43,7 +43,9 @@
                                     <select name="parent_id" id="parent_id" class="form-control">
                                         <option value="">Select Parent Menu</option>
                                         @foreach ($menus as $item)
-                                            <option value="{{ $item->id }}">{{ $item->title }}</option>
+                                            <option value="{{ $item['id'] }}">
+                                                {{ $item['title'] }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -75,8 +77,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (!$menus->isEmpty())
-                                @foreach ($menus as $value)
+                            @if (!$all_menus->isEmpty())
+                                @foreach ($all_menus as $value)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $value->title }}</td>

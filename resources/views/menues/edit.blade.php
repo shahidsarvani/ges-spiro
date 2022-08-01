@@ -44,7 +44,7 @@
                                     <select name="parent_id" id="parent_id" class="form-control">
                                         <option value="">Select Parent Menu</option>
                                         @foreach ($menus as $item)
-                                            <option value="{{ $item->id }}" @if($menu->parent_id == $item->id) selected @endif>{{ $item->title }}</option>
+                                            <option value="{{ $item['id'] }}" @if($menu->parent_id == $item['id']) selected @endif>{{ $item['title'] }}</option>
                                         @endforeach
                                     </select>
                                 </div>

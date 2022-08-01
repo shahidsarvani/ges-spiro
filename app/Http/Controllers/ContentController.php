@@ -29,7 +29,30 @@ class ContentController extends Controller
     public function create()
     {
         //
-        $menus = Menu::get(['title', 'id']);
+        $all_menus = Menu::with('parent')->get();
+        $menus = array();
+        foreach ($all_menus as $item) {
+            $title = array();
+            if ($item->parent) {
+                array_unshift($title, $item->parent->title);
+                if ($item->parent->parent) {
+                    array_unshift($title, $item->parent->parent->title);
+                    if ($item->parent->parent->parent) {
+                        array_unshift($title, $item->parent->parent->parent->title);
+                        if ($item->parent->parent->parent->parent) {
+                            array_unshift($title, $item->parent->parent->parent->parent->title);
+                        }
+                    }
+                }
+            }
+            array_push($title, $item->title);
+            $title = implode(' -> ', $title);
+            $temp = [
+                'id' => $item->id,
+                'title' => $title
+            ];
+            array_push($menus, $temp);
+        }
         return view('contents.create', compact('menus'));
     }
 
@@ -81,7 +104,30 @@ class ContentController extends Controller
     public function edit(Content $content)
     {
         //
-        $menus = Menu::get(['title', 'id']);
+        $all_menus = Menu::with('parent')->get();
+        $menus = array();
+        foreach ($all_menus as $item) {
+            $title = array();
+            if ($item->parent) {
+                array_unshift($title, $item->parent->title);
+                if ($item->parent->parent) {
+                    array_unshift($title, $item->parent->parent->title);
+                    if ($item->parent->parent->parent) {
+                        array_unshift($title, $item->parent->parent->parent->title);
+                        if ($item->parent->parent->parent->parent) {
+                            array_unshift($title, $item->parent->parent->parent->parent->title);
+                        }
+                    }
+                }
+            }
+            array_push($title, $item->title);
+            $title = implode(' -> ', $title);
+            $temp = [
+                'id' => $item->id,
+                'title' => $title
+            ];
+            array_push($menus, $temp);
+        }
         $media = Media::where('menu_id', $content->menu_id)->get();
         return view('contents.edit', compact('content', 'menus', 'media'));
     }

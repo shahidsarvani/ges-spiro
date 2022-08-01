@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class MenuController extends Controller
 {
@@ -15,9 +16,32 @@ class MenuController extends Controller
     public function index()
     {
         //
-        $menus = Menu::with('parent')->get();
+        $all_menus = Menu::with('parent')->get();
+        $menus = array();
+        foreach ($all_menus as $menu) {
+            $title = array();
+            if ($menu->parent) {
+                array_unshift($title, $menu->parent->title);
+                if ($menu->parent->parent) {
+                    array_unshift($title, $menu->parent->parent->title);
+                    if ($menu->parent->parent->parent) {
+                        array_unshift($title, $menu->parent->parent->parent->title);
+                        if ($menu->parent->parent->parent->parent) {
+                            array_unshift($title, $menu->parent->parent->parent->parent->title);
+                        }
+                    }
+                }
+            }
+            array_push($title, $menu->title);
+            $title = implode(' -> ', $title);
+            $temp = [
+                'id' => $menu->id,
+                'title' => $title
+            ];
+            array_push($menus, $temp);
+        }
         // return $menus;
-        return view('menues.index', compact('menus'));
+        return view('menues.index', compact('menus', 'all_menus'));
     }
 
     /**
@@ -73,7 +97,36 @@ class MenuController extends Controller
     public function edit(Menu $menu)
     {
         //
-        $menus = Menu::with('parent')->get();
+        $all_menus = Menu::with('parent')->get();
+        $menus = array();
+        foreach ($all_menus as $item) {
+            $title = array();
+            if ($item->parent) {
+                array_unshift($title, $item->parent->title);
+                if ($item->parent->parent) {
+                    array_unshift($title, $item->parent->parent->title);
+                    if ($item->parent->parent->parent) {
+                        array_unshift($title, $item->parent->parent->parent->title);
+                        if ($item->parent->parent->parent->parent) {
+                            array_unshift($title, $item->parent->parent->parent->parent->title);
+                        }
+                    }
+                }
+            }
+            array_push($title, $item->title);
+            $title = implode(' -> ', $title);
+            $temp = [
+                'id' => $item->id,
+                'title' => $title
+            ];
+            array_push($menus, $temp);
+        }
+        // return $menu;
+        // foreach ($menus as $item) {
+        //     if($menu->parent_id === $item['id']){
+        //         return $item;
+        //     }
+        // }
         return view('menues.edit', compact('menu', 'menus'));
     }
 

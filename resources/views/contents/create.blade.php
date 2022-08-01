@@ -20,7 +20,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Title:</label>
-                                    <input type="text" class="form-control" name="title" required>
+                                    <input type="text" class="form-control" name="title">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -35,7 +35,7 @@
                                     <select name="menu_id" id="menu_id" class="form-control" required>
                                         <option value="">Select Menu</option>
                                         @foreach ($menus as $item)
-                                            <option value="{{ $item->id }}">{{ $item->title }}
+                                            <option value="{{ $item['id'] }}">{{ $item['title'] }}
                                             </option>
                                         @endforeach
                                     </select>
