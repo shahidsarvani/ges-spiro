@@ -17,7 +17,25 @@ class ContentController extends Controller
     public function index()
     {
         //
-        $contents = Content::latest()->get();
+        $contents = Content::with('menu')->latest()->get();
+        foreach ($contents as $content) {
+            $title = array();
+            if ($content->menu->parent) {
+                array_unshift($title, $content->menu->parent->title);
+                if ($content->menu->parent->parent) {
+                    array_unshift($title, $content->menu->parent->parent->title);
+                    if ($content->menu->parent->parent->parent) {
+                        array_unshift($title, $content->menu->parent->parent->parent->title);
+                        if ($content->menu->parent->parent->parent->parent) {
+                            array_unshift($title, $content->menu->parent->parent->parent->parent->title);
+                        }
+                    }
+                }
+            }
+            array_push($title, $content->menu->title);
+            $content->menu_title = implode(' -> ', $title);
+            // return $content;
+        }
         return view('contents.index', compact('contents'));
     }
 

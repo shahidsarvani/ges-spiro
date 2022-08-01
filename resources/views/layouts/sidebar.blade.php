@@ -78,6 +78,15 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('media.index') }}"
+                        class="nav-link @if (Route::is('media.index', 'media.edit')) active @endif">
+                        <i class="icon-images3"></i>
+                        <span>
+                            Media
+                        </span>
+                    </a>
+                </li>
 
             </ul>
         </div>

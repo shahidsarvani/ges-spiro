@@ -21,8 +21,9 @@ class MediaController extends Controller
     public function index()
     {
         //
-        // $media = Media::where('is_projector', 0)->get();
-        // return view('media.index', compact('media'));
+        $media = Media::all();
+        // return $media;
+        return view('media.index', compact('media'));
     }
 
     /**

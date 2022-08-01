@@ -12,6 +12,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Menu</th>
                         <th>Title</th>
                         <th>Sub Title</th>
                         <th>Actions</th>
@@ -22,8 +23,9 @@
                         @foreach ($contents as $value)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $value->title }}</td>
-                                <td>{{ $value->sub_title }}</td>
+                                <td>{{ $value->menu_title }}</td>
+                                <td>{{ $value->title ?? 'N/A' }}</td>
+                                <td>{{ $value->sub_title ?? 'N/A' }}</td>
                                 <td>
                                     <div class="list-icons">
                                         <a href="{{ route('contents.edit', $value->id) }}"
