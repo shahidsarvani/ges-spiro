@@ -30,7 +30,7 @@ Route::middleware([
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('menus', MenuController::class);
     Route::resource('contents', ContentController::class);
-    Route::resource('media', MediaController::class)->only('destroy');
+    Route::resource('media', MediaController::class)->except('create', 'store');
     Route::post('/upload_media', [MediaController::class, 'upload_media_dropzone'])->name('upload_media');
 
 });
