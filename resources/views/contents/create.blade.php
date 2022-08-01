@@ -84,7 +84,7 @@
             maxFilesize: 10000000000000000, // MB
             addRemoveLinks: true,
             chunking: true,
-            chunkSize: 1000000000,
+            chunkSize: 10000000,
             // If true, the individual chunks of a file are being uploaded simultaneously.
             parallelChunkUploads: true,
             acceptedFiles: 'video/*, image/*',
