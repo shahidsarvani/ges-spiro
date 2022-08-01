@@ -15,9 +15,11 @@
 <!-- /core JS files -->
 
 <!-- Theme JS files -->
+<script src="{{ asset('assets/global/js/plugins/forms/styling/uniform.min.js') }}"></script>
 <script src="{{ asset('assets/js/app.js') }}"></script>
 <script src="{{ asset('assets/tinymce/tinymce.min.js') }}"></script>
 <script src="{{ asset('assets/tinymce/init-tinymce.js') }}"></script>
+<script src="{{ asset('assets/global/js/demo_pages/form_inputs.js') }}"></script>
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 <!-- /theme JS files -->
 

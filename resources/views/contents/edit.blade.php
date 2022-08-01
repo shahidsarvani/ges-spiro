@@ -14,7 +14,6 @@
             top: 10px;
             right: 10px;
         }
-
     </style>
 @endsection
 @section('content')
@@ -33,8 +32,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Title:</label>
-                                    <input type="text" class="form-control" name="title"
-                                        value="{{ $content->title }}">
+                                    <input type="text" class="form-control" name="title" value="{{ $content->title }}">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -94,11 +92,16 @@
                                                         alt="" width="100%">
                                                 @else
                                                     <div class="card-img embed-responsive embed-responsive-16by9">
-                                                        <video
-                                                            src="{{ URL::asset('public/storage/media/' . $item->name) }}"
-                                                            muted controls></video>
+                                                        <video src="{{ URL::asset('public/storage/media/' . $item->name) }}"
+                                                            muted controls @if($item->video_thumbnail) poster="{{ URL::asset('public/storage/media/' . $item->video_thumbnail) }}" @endif></video>
                                             @endif
                                             <div class="video-content">
+                                                @if ($item->file_type == 'video')
+                                                    <a
+                                                        href="{{ route('media.edit', $item->id) }}"class="list-icons-item text-info-600">
+                                                        <i class="icon-pencil"></i>
+                                                    </a>
+                                                @endif
                                                 <a href="{{ route('media.destroy', $item->id) }}"
                                                     onclick="event.preventDefault(); $('.delete-form{{ $item->id }}').submit();"
                                                     class="list-icons-item text-danger-600">

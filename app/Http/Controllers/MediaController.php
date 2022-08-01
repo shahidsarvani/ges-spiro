@@ -34,8 +34,6 @@ class MediaController extends Controller
     public function create()
     {
         //
-        // $rooms = Room::get(['name', 'id']);
-        // return view('media.create', compact('rooms'));
     }
 
     /**
@@ -47,30 +45,6 @@ class MediaController extends Controller
     public function store(Request $request)
     {
         //
-        // return $request;
-        // if (!$request->lang) {
-        //     return back()->with('error', 'Select Language');
-        // }
-        //     $is_projector = 0;
-        // if ($request->file_names) {
-        //     foreach ($request->file_names as $index => $fileName) {
-        //         // $media = Media::whereName($fileName)->first();
-        //         $media = Media::create([
-        //             'lang' => $request->lang,
-        //             'name' => $fileName,
-        //             'room_id' => $request->room_id,
-        //             'phase_id' => $request->phase_id ?? null,
-        //             'zone_id' => $request->zone_id ?? null,
-        //             'scene_id' => $request->scene_id ?? null,
-        //             'is_projector' => $is_projector,
-        //             'duration' => $request->durations[$index],
-        //             'is_image' => 0
-        //         ]);
-        //     }
-        //     return redirect()->route('media.index');
-        // } else {
-        //     return back()->with('error', 'Upload Media File');
-        // }
     }
 
     /**
@@ -93,6 +67,8 @@ class MediaController extends Controller
     public function edit($id)
     {
         //
+        $media = Media::find($id);
+        return view('media.edit', compact('media'));
     }
 
     /**
@@ -105,6 +81,22 @@ class MediaController extends Controller
     public function update(Request $request, $id)
     {
         //
+        // return $request->file('video_thumbnail');
+        $media = Media::find($id);
+        if ($file = $request->file('video_thumbnail')) {
+            $mediaPath = $media->getMediaPath();
+            if($media->video_thumbnail) {
+                Storage::delete(['/' . $mediaPath . '/' . $media->video_thumbnail]);
+            }
+            $name = time() . $file->getClientOriginalName();
+            $file->storeAs($mediaPath, $name);
+            $media->update([
+                'video_thumbnail' => $name
+            ]);
+            return redirect()->route('media.index')->with('success', 'Thumbnail Updated');
+        } else {
+            return back()->with('error', 'File not found');
+        }
     }
 
     /**

@@ -14,7 +14,8 @@ class Media extends Model
     protected $fillable = [
         'name',
         'file_type',
-        'menu_id'
+        'menu_id',
+        'video_thumbnail'
     ];
 
     public function menu()
