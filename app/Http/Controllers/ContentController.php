@@ -7,6 +7,7 @@ use App\Models\Media;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ContentController extends Controller
 {
@@ -168,6 +169,7 @@ class ContentController extends Controller
     public function update(Request $request, Content $content)
     {
         //
+        // return $request;
         $data = $request->except('_token', '_method');
         $res = $content->update($data);
         if ($res) {
@@ -195,5 +197,24 @@ class ContentController extends Controller
     public function destroy(Content $content)
     {
         //
+        try {
+            $mediaPath = new Media();
+            $mediaPath = $mediaPath->getMediaPath();
+            $media = Media::where('menu_id', $content->menu_id)->get();
+            // return $media;
+            if(count($media)) {
+                foreach($media as $key => $value) {
+                    Storage::delete(['/' . $mediaPath . '/' . $value->name]);
+                    if($value->video_thumbnail) {
+                        Storage::delete(['/' . $mediaPath . '/' . $value->video_thumbnail]);
+                    }
+                }
+            }
+            $content->delete();
+            return redirect()->route('contents.index')->with('success', 'Content Deleted');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error: Something went wrong!');
+        }
+
     }
 }
