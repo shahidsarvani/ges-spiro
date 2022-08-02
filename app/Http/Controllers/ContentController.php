@@ -133,8 +133,14 @@ class ContentController extends Controller
         //
         $all_menus = Menu::with('parent')->get();
         $menus = array();
+        $done_menu = array();
         foreach ($all_menus as $item) {
             $title = array();
+            if($item->content) {
+                if($item->content->menu_id != $content->menu_id) {
+                    array_push($done_menu, $item->content->menu_id);
+                }
+            }
             if ($item->parent) {
                 array_unshift($title, $item->parent->title);
                 if ($item->parent->parent) {
@@ -155,8 +161,9 @@ class ContentController extends Controller
             ];
             array_push($menus, $temp);
         }
+        Log::info($done_menu);
         $media = Media::where('menu_id', $content->menu_id)->get();
-        return view('contents.edit', compact('content', 'menus', 'media'));
+        return view('contents.edit', compact('content', 'menus', 'media', 'done_menu'));
     }
 
     /**
@@ -171,8 +178,18 @@ class ContentController extends Controller
         //
         // return $request;
         $data = $request->except('_token', '_method');
+        $menu_id = $content->menu_id;
         $res = $content->update($data);
         if ($res) {
+            $media = Media::where('menu_id', $menu_id)->get();
+            // return $media;
+            if(count($media)) {
+                foreach($media as $key => $value) {
+                    $value->update([
+                        'menu_id' => $request->menu_id
+                    ]);
+                }
+            }
             if ($request->file_names) {
                 foreach ($request->file_names as $index => $fileName) {
                     $media = Media::create([

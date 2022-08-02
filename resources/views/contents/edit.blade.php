@@ -49,7 +49,7 @@
                                         <option value="">Select Menu</option>
                                         @foreach ($menus as $item)
                                             <option value="{{ $item['id'] }}"
-                                                @if ($content->menu_id == $item['id']) selected @endif>{{ $item['title'] }}
+                                                @if ($content->menu_id == $item['id']) selected @endif @if (in_array($item['id'], $done_menu)) disabled @endif>{{ $item['title'] }}
                                             </option>
                                         @endforeach
                                     </select>
